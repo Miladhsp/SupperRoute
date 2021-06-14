@@ -1,0 +1,14 @@
+targets:
+  $default:
+    builders:
+      supper_route|supper_route_builder:
+        generate_for:
+          - lib/main.dart
+
+builders:
+  supper_route_builder:
+    import: 'package:supper_route/generator/builder.dart'
+    builder_factories: [ 'builder' ]
+    build_extensions: { '.dart': [ '.mich.dart' ] }
+    auto_apply: root_package
+    build_to: source
