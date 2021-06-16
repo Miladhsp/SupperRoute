@@ -6,6 +6,8 @@
 
 part of 'main.dart';
 
+final Goto GoTo = Goto();
+
 class SupperApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -19,18 +21,13 @@ class SupperApp extends StatelessWidget {
   }
 }
 
-arguments(BuildContext context) => ModalRoute.of(context)?.settings.arguments;
-final Goto GoTo = Goto();
-
 class Goto {
-  late BuildContext _context;
-
   home({required BuildContext context, Object? arguments}) {
-    _from(this._context, '/', arguments);
+    _from(context, '/', arguments);
   }
 
   aboutUs({required BuildContext context, Object? arguments}) {
-    _from(this._context, '/aboutUs', arguments);
+    _from(context, '/aboutUs', arguments);
   }
 
   Future<T?> _from<T extends Object?>(
@@ -41,3 +38,5 @@ class Goto {
     return Navigator.of(context).pushNamed<T>(routeName, arguments: arguments);
   }
 }
+
+arguments(BuildContext context) => ModalRoute.of(context)?.settings.arguments;

@@ -23,6 +23,10 @@ StringBuffer generateCode(String enumName, Set<Model> models) {
   var code = StringBuffer();
   code.writeln('''
     part of 'main.dart';
+    
+    
+      final Goto GoTo = Goto();
+    
     class SupperApp extends StatelessWidget {
            @override
            Widget build(BuildContext context) {
@@ -33,19 +37,15 @@ StringBuffer generateCode(String enumName, Set<Model> models) {
   models.forEach((m) {
     code.writeln('\'${m.path}\' $context ${m.screen}() ,');
   });
-  code.writeln(
-      '''},);}}arguments(BuildContext context) => ModalRoute.of(context)?.settings.arguments;
-      final Goto GoTo = Goto();
+  code.writeln('''},);}}
             
       class Goto {
-      
-        late BuildContext _context;
   ''');
 
   models.forEach((m) {
     code.writeln('''
      ${m.enumm}({required BuildContext context,Object? arguments}){
-    _from(this._context, \'${m.path}\', arguments);
+    _from(context, \'${m.path}\', arguments);
   }
   ''');
   });
@@ -58,6 +58,10 @@ StringBuffer generateCode(String enumName, Set<Model> models) {
       return Navigator.of(context).pushNamed<T>(routeName, arguments: arguments);
     }
   }
+  
+  arguments(BuildContext context) => ModalRoute.of(context)?.settings.arguments;
+  
+  
   ''');
   return code;
 }
