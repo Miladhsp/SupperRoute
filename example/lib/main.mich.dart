@@ -20,21 +20,24 @@ class SupperApp extends StatelessWidget {
 }
 
 arguments(BuildContext context) => ModalRoute.of(context)?.settings.arguments;
+final Goto GoTo = Goto();
 
-extension navigation on GoTo {
-  value() {
-    switch (this) {
-      case GoTo.home:
-        return '/';
-      case GoTo.aboutUs:
-        return '/aboutUs';
-    }
+class Goto {
+  late BuildContext _context;
+
+  home({required BuildContext context, Object? arguments}) {
+    _from(this._context, '/', arguments);
   }
 
-  Future<T?> from<T extends Object?>(
-    BuildContext context, {
+  aboutUs({required BuildContext context, Object? arguments}) {
+    _from(this._context, '/aboutUs', arguments);
+  }
+
+  Future<T?> _from<T extends Object?>(
+    BuildContext context,
+    String routeName,
     Object? arguments,
-  }) {
-    return Navigator.of(context).pushNamed<T>(value(), arguments: arguments);
+  ) {
+    return Navigator.of(context).pushNamed<T>(routeName, arguments: arguments);
   }
 }

@@ -1,9 +1,15 @@
-import 'package:example/main.dart';
 import 'package:example/model/Contact.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+import '../main.dart';
+
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,8 +19,8 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            var dataPass = Contact('Milad Hasanpour', 'programmer');
-            GoTo.aboutUs.from(context, arguments: dataPass);
+            var dataPass = Contact('Milad', 'programmer');
+            GoTo.aboutUs(context: context, arguments: dataPass);
           },
           child: Text('About Us ...'),
         ),

@@ -6,8 +6,7 @@ import 'package:supper_route/define.dart';
 part 'main.mich.dart';
 
 void main() => runApp(SupperApp());
-
-enum GoTo {
+enum routes {
   @define(path: '/', screen: HomePage)
   home,
   @define(path: '/aboutUs', screen: AboutUs)

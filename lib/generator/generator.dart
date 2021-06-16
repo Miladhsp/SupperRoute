@@ -33,27 +33,31 @@ StringBuffer generateCode(String enumName, Set<Model> models) {
   models.forEach((m) {
     code.writeln('\'${m.path}\' $context ${m.screen}() ,');
   });
-  code.writeln('''
-  },);}}
-  arguments(BuildContext context) => ModalRoute.of(context)?.settings.arguments;
-  
-      extension navigation on $enumName {
-        value() {
-          switch (this) {''');
-  models.forEach((m) {
-    code.writeln('case $enumName.${m.enumm}: return \'${m.path}\' ;');
-  });
-  code.writeln('''
-          }
-        }
+  code.writeln(
+      '''},);}}arguments(BuildContext context) => ModalRoute.of(context)?.settings.arguments;
+      final Goto GoTo = Goto();
+            
+      class Goto {
       
-         Future<T?> from<T extends Object?>(
-          BuildContext context, {
-          Object? arguments,
-        }) {
-          return Navigator.of(context).pushNamed<T>(value(), arguments: arguments);
-        }
-      }
+        late BuildContext _context;
+  ''');
+
+  models.forEach((m) {
+    code.writeln('''
+     ${m.enumm}({required BuildContext context,Object? arguments}){
+    _from(this._context, \'${m.path}\', arguments);
+  }
+  ''');
+  });
+  code.writeln(''' 
+    Future<T?> _from<T extends Object?>(
+      BuildContext context,
+      String routeName,
+      Object? arguments,
+    ) {
+      return Navigator.of(context).pushNamed<T>(routeName, arguments: arguments);
+    }
+  }
   ''');
   return code;
 }

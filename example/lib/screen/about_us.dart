@@ -23,7 +23,7 @@ class AboutUs extends StatelessWidget {
             ),
             ElevatedButton(
                 onPressed: () {
-                  GoTo.home.from(context);
+                  GoTo.home(context: context);
                 },
                 child: Text('<- Back'))
           ],
