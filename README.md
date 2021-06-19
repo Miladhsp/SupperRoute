@@ -29,9 +29,11 @@ void main() => runApp(SupperApp());
 
 //Example
 enum routes {
-  @define.asHome(screen: HomePage)//initialRoute: '/'
+//@define.as(path: '/', screen: HomePage) //initialRoute:'/'
+  @define.asHome(screen: HomePage)
   home,
-  @define(path: '/aboutUs', screen: AboutUs)
+//@define.as(path: '/AboutUs', screen: AboutUs)
+  @define(screen: AboutUs)
   aboutUs,
 }
 ```

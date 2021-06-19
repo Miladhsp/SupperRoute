@@ -12,7 +12,7 @@ class MichGenerator extends GeneratorForSubAnnotatedField<Model, define> {
     try {
       path = annotation.peek('path')!.stringValue;
     } catch (error) {
-      path = screen;
+      path = '/' + screen;
     }
     return Model(path, screen, field.displayName);
   }
