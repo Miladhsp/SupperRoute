@@ -15,7 +15,7 @@ class SupperApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
-        '/aboutUs': (context) => AboutUs(),
+        'AboutUs': (context) => AboutUs(),
       },
     );
   }
@@ -27,7 +27,7 @@ class Goto {
   }
 
   aboutUs({required BuildContext context, Object? arguments}) {
-    _from(context, '/aboutUs', arguments);
+    _from(context, 'AboutUs', arguments);
   }
 
   Future<T?> _from<T extends Object?>(

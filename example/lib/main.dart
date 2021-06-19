@@ -11,6 +11,6 @@ void main() => runApp(SupperApp());
 enum routes {
   @define.asHome(screen: HomePage)
   home,
-  @define(path: '/aboutUs', screen: AboutUs)
+  @define(screen: AboutUs)
   aboutUs,
 }

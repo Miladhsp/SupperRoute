@@ -8,8 +8,13 @@ class MichGenerator extends GeneratorForSubAnnotatedField<Model, define> {
   generateModels(E.FieldElement field, ConstantReader annotation) {
     String screen = annotation.peek('screen')!.objectValue.toString();
     screen = screen.substring(screen.indexOf('(') + 1, screen.indexOf('*'));
-    return Model(
-        annotation.peek('path')!.stringValue, screen, field.displayName);
+    String? path;
+    try {
+      path = annotation.peek('path')!.stringValue;
+    } catch (error) {
+      path = screen;
+    }
+    return Model(path, screen, field.displayName);
   }
 
   @override
