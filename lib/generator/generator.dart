@@ -10,15 +10,15 @@ class MichGenerator extends GeneratorForAnnotation<SupperRoute> {
       E.Element element, ConstantReader annotation, BuildStep buildStep) {
     String initialRoute = annotation.peek('initialRoute')?.stringValue ?? '/';
     List<Object>? screens = annotation.peek('screens')!.listValue;
-    Map<Object, Object>? routes =
-        annotation.peek('routes')?.mapValue as Map<Object, Object>;
+    Map<dynamic, dynamic>? routes =
+        annotation.peek('routes')?.mapValue as Map<dynamic, dynamic>;
     return generateCode(
             initialRoute, generateModels(initialRoute, screens, routes))
         .toString();
   }
 
-  Set<Model> generateModels(
-      String initialRoute, List<Object>? screens, Map<Object, Object>? routes) {
+  Set<Model> generateModels(String initialRoute, List<Object>? screens,
+      Map<dynamic, dynamic>? routes) {
     Set<Model> models = {};
     models.add(Model(getClass(screens![0].toString()), initialRoute));
     Screens:
