@@ -17,8 +17,9 @@ dev_dependencies:
 ```
 # Example
 #### main.dart
+
 ```diff
- + path >> lib/main/main.dart
++ path ' lib/main/main.dart '
 ```
 
 ```dart
