@@ -4,7 +4,7 @@ targets:
       supper_route|supper_route_builder:
         generate_for:
           include:
-            - lib/main/main.dart
+            - lib/main/**.dart
 
 builders:
   supper_route_builder:
