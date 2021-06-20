@@ -1,4 +1,4 @@
-import 'package:example/main.dart';
+import 'package:example/main/main.dart';
 import 'package:example/model/Contact.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +23,7 @@ class AboutUs extends StatelessWidget {
             ),
             ElevatedButton(
                 onPressed: () {
-                  GoTo.home(context: context);
+                  goto.homePage(context: context);
                 },
                 child: Text('<- Back'))
           ],

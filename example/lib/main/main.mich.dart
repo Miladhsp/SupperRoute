@@ -6,7 +6,7 @@
 
 part of 'main.dart';
 
-final Goto GoTo = Goto();
+final Goto goto = Goto();
 
 class SupperApp extends StatelessWidget {
   @override
@@ -22,7 +22,7 @@ class SupperApp extends StatelessWidget {
 }
 
 class Goto {
-  home({required BuildContext context, Object? arguments}) {
+  homePage({required BuildContext context, Object? arguments}) {
     _from(context, '/', arguments);
   }
 

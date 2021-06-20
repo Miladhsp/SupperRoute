@@ -1,42 +1,66 @@
 import 'package:analyzer/dart/element/element.dart' as E;
+import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:supper_route/define.dart';
-import 'package:supper_route/generator/abstract_generator.dart';
 
-class MichGenerator extends GeneratorForSubAnnotatedField<Model, define> {
+import '../supper_route.dart';
+
+class MichGenerator extends GeneratorForAnnotation<SupperRoute> {
   @override
-  generateModels(E.FieldElement field, ConstantReader annotation) {
-    String screen = annotation.peek('screen')!.objectValue.toString();
-    screen = screen.substring(screen.indexOf('(') + 1, screen.indexOf('*'));
-    String? path;
-    try {
-      path = annotation.peek('path')!.stringValue;
-    } catch (error) {
-      path = '/' + screen;
-    }
-    return Model(path, screen, field.displayName);
+  generateForAnnotatedElement(
+      E.Element element, ConstantReader annotation, BuildStep buildStep) {
+    String initialRoute = annotation.peek('initialRoute')?.stringValue ?? '/';
+    List<Object>? screens = annotation.peek('screens')!.listValue;
+    Map<Object, Object>? routes =
+        annotation.peek('routes')?.mapValue as Map<Object, Object>;
+    return generateCode(
+            initialRoute, generateModels(initialRoute, screens, routes))
+        .toString();
   }
 
-  @override
-  String generateFile(String enumName, Set<Model> models) {
-    return generateCode(enumName, models).toString();
+  Set<Model> generateModels(
+      String initialRoute, List<Object>? screens, Map<Object, Object>? routes) {
+    Set<Model> models = {};
+    models.add(Model(getClass(screens![0].toString()), initialRoute));
+    Screens:
+    for (int i = 1; i < screens.length; i++) {
+      String item = getClass(screens[i].toString());
+      models.add(Model(item, '/' + item));
+    }
+    Routes:
+    routes?.forEach((screen, path) {
+      models.add(
+          Model(getClass(screen.toString()), getMapValue(path.toString())));
+    });
+    return models;
+  }
+
+  String getClass(String type) {
+    return type.substring(type.indexOf('(') + 1, type.indexOf('*'));
+  }
+
+  String getMapValue(String type) {
+    return type.substring(type.indexOf('/') + 1, type.indexOf(')') - 1);
   }
 }
 
-StringBuffer generateCode(String enumName, Set<Model> models) {
+String firstLowerCase(String txt) {
+  return txt[0].toLowerCase() + txt.substring(1);
+}
+
+StringBuffer generateCode(initialRoute, Set<Model> models) {
   final String context = ': (context) =>';
   var code = StringBuffer();
   code.writeln('''
     part of 'main.dart';
     
     
-      final Goto GoTo = Goto();
+      final Goto goto = Goto();
     
     class SupperApp extends StatelessWidget {
            @override
            Widget build(BuildContext context) {
              return MaterialApp(
-             initialRoute: '/',
+             initialRoute: \'$initialRoute\',
              routes: {
     ''');
   models.forEach((m) {
@@ -49,7 +73,7 @@ StringBuffer generateCode(String enumName, Set<Model> models) {
 
   models.forEach((m) {
     code.writeln('''
-     ${m.enumm}({required BuildContext context,Object? arguments}){
+     ${firstLowerCase(m.screen)}({required BuildContext context,Object? arguments}){
     _from(context, \'${m.path}\', arguments);
   }
   ''');
@@ -74,7 +98,6 @@ StringBuffer generateCode(String enumName, Set<Model> models) {
 class Model {
   final String path;
   final String screen;
-  final String enumm;
 
-  Model(this.path, this.screen, this.enumm);
+  Model(this.screen, this.path);
 }

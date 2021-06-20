@@ -2,7 +2,7 @@ import 'package:example/model/Contact.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../main.dart';
+import '../main/main.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
         child: ElevatedButton(
           onPressed: () {
             var dataPass = Contact('Milad', 'programmer');
-            GoTo.aboutUs(context: context, arguments: dataPass);
+            goto.aboutUs(context: context, arguments: dataPass);
           },
           child: Text('About Us ...'),
         ),
