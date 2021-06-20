@@ -21,55 +21,48 @@ dev_dependencies:
 import 'package:example/screen/about_us.dart';
 import 'package:example/screen/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:supper_route/define.dart';
+import 'package:supper_route/supper_route.dart';
 
-part 'main.mich.dart';
+part '../main/main.mich.dart';
 
+@SupperRoute(screens: [HomePage, AboutUs])
 void main() => runApp(SupperApp());
 
-//Example
-enum routes {
-//@define.as(path: '/', screen: HomePage) //initialRoute:'/'
-  @define.asHome(screen: HomePage)
-  home,
-//@define.as(path: '/AboutUs', screen: AboutUs)
-  @define(screen: AboutUs)
-  aboutUs,
-}
 ```
 ## Terminal
-```bat
+```shell
 flutter packages pub run build_runner build --delete-conflicting-outputs
 flutter packages pub run build_runner clean
 ::flutter packages pub run build_runner watch --delete-conflicting-outputs
 ```
 #### home_page.dart
 ```dart
-import '../main.dart';
+import '../main/main.dart';
 
 class HomePage extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-  var dataPass = 'Milad Hasanpour';
-  GoTo.aboutUs(context: context, arguments: dataPass);
-  return Center();
+    var dataPass = 'Milad Hasanpour';
+    goto.aboutUs(context: context, arguments: dataPass);
+    return Center();
   }
   
 }
 ```
 #### about_us.dart
 ```dart
-import '../main.dart';
+import '../main/main.dart';
 
 class AboutUs extends StatelessWidget {
 
-  var dataPass = arguments(context).toString();
+  var args = arguments(context).toString();
   
   @override
   Widget build(BuildContext context) {
-  GoTo.home(context: context);
-  return Center();
+    print(args);
+    goto.homePage(context: context);
+    return Center();
   }
   
 }
@@ -85,7 +78,7 @@ class AboutUs extends StatelessWidget {
 
 part of 'main.dart';
 
-final Goto GoTo = Goto();
+final Goto goto = Goto();
 
 class SupperApp extends StatelessWidget {
   @override
@@ -94,32 +87,31 @@ class SupperApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
-        '/aboutUs': (context) => AboutUs(),
+        '/AboutUs': (context) => AboutUs(),
       },
     );
   }
 }
 
 class Goto {
-  home({required BuildContext context, Object? arguments}) {
+  homePage({required BuildContext context, Object? arguments}) {
     _from(context, '/', arguments);
   }
 
   aboutUs({required BuildContext context, Object? arguments}) {
-    _from(context, '/aboutUs', arguments);
+    _from(context, '/AboutUs', arguments);
   }
 
   Future<T?> _from<T extends Object?>(
-    BuildContext context,
-    String routeName,
-    Object? arguments,
-  ) {
+      BuildContext context,
+      String routeName,
+      Object? arguments,
+      ) {
     return Navigator.of(context).pushNamed<T>(routeName, arguments: arguments);
   }
 }
 
 arguments(BuildContext context) => ModalRoute.of(context)?.settings.arguments;
-
 
 ```
 

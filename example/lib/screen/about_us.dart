@@ -1,6 +1,7 @@
-import 'package:example/main/main.dart';
 import 'package:example/model/Contact.dart';
 import 'package:flutter/material.dart';
+
+import '../main/main.dart';
 
 class AboutUs extends StatelessWidget {
   @override
