@@ -17,6 +17,10 @@ dev_dependencies:
 ```
 # Example
 #### main.dart
+```diff
+ + path >> lib/main/main.dart
+```
+
 ```dart
 import 'package:example/screen/about_us.dart';
 import 'package:example/screen/home_page.dart';

@@ -3,9 +3,8 @@ targets:
     builders:
       supper_route|supper_route_builder:
         generate_for:
-          enabled: true
           include:
-            - lib/main/**.dart
+            - lib/main/main.dart
 
 builders:
   supper_route_builder:
