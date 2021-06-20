@@ -25,7 +25,7 @@ import 'package:supper_route/supper_route.dart';
 
 part '../main/main.mich.dart';
 
-@SupperRoute(screens: [HomePage, AboutUs])//The app starts from the homePage
+@SupperRoute(screens: [HomePage, AboutUs])//The app starts from the first item of screens (homePage)
 //@SupperRoute(initialRoute: '/', screens: [HomePage], routes: {AboutUs: '/aboutUs'})
 void main() => runApp(SupperApp());
 
